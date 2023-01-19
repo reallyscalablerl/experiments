@@ -1,0 +1,196 @@
+env_config:
+    action_repeat: 1
+    action_spec:
+        dim:
+        - 17
+        type: continuous
+    demonstration:
+        adaptive: true
+        curriculum_length: 50
+        history_length: 20
+        improve_threshold: 0.1
+        increment: 25
+        increment_frequency: 100
+        mixing:
+        - random
+        mixing_ratio:
+        - 1.0
+        ratio_step:
+        - 0.0
+        sample_window_width: 25
+        use_demo: false
+    env_name: gym:Humanoid-v3
+    eval_mode:
+        demonstration: null
+    frame_stack_concatenate_on_env: true
+    frame_stacks: 1
+    limit_episode_length: 200
+    obs_spec:
+        low_dim:
+            flat_inputs:
+            - 376
+    observation:
+        low_dim:
+        - robot-state
+        - object-state
+        pixel:
+        - camera0
+    pixel_input: false
+    sleep_time: 0
+    stochastic_eval: true
+    use_depth: false
+    use_grayscale: false
+    video:
+        max_videos: 500
+        record_every: 5
+        record_video: false
+        save_folder: null
+learner_config:
+    algo:
+        adapt_consts:
+            beta_init: 1.0
+            beta_range:
+            - 0.02857142857142857
+            - 35.0
+            kl_cutoff_coeff: 250
+            scale_constant: 1.5
+        advantage:
+            lam: 0.97
+            norm_adv: true
+            reward_scale: 1.0
+        clip_consts:
+            clip_epsilon_init: 0.2
+            clip_range:
+            - 0.05
+            - 0.3
+            scale_constant: 1.2
+        consts:
+            adjust_threshold:
+            - 0.5
+            - 2.0
+            epoch_baseline: 1
+            epoch_policy: 1
+            init_log_sig: -1.0
+            kl_target: 0.015
+            log_sig_range: 0.25
+        gamma: 0.995
+        limit_training_episode_length: 0
+        n_step: 25
+        network:
+            actor_gradient_norm_clip: 5.0
+            actor_regularization: 0.0
+            anneal:
+                frames_to_anneal: 5000000.0
+                lr_scheduler: LinearWithMinLR
+                lr_update_frequency: 100
+                min_lr: 5.0e-05
+            clip_actor_gradient: true
+            clip_critic_gradient: true
+            critic_gradient_norm_clip: 5.0
+            critic_regularization: 0.0
+            lr_actor: 0.0001
+            lr_critic: 0.0001
+        ppo_mode: clip
+        rnn:
+            horizon: 5
+            if_rnn_policy: false
+            rnn_hidden: 100
+            rnn_layer: 0
+        stride: 20
+        use_batchnorm: false
+        use_r_filter: false
+        use_z_filter: false
+    model:
+        actor_fc_hidden_sizes:
+        - 64
+        - 64
+        cnn_feature_dim: 64
+        convs: []
+        critic_fc_hidden_sizes:
+        - 64
+        - 64
+        use_layernorm: false
+    parameter_publish:
+        exp_interval: 4096
+        min_publish_interval: 0.3
+    replay:
+        batch_size: 1024
+        memory_size: 10240
+        replay_shards: 32
+        sampling_start_size: 2048
+session_config:
+    agent:
+        fetch_parameter_interval: 100
+        fetch_parameter_mode: step
+        num_gpus: 0
+    checkpoint:
+        agent:
+            keep_best: 0
+            keep_history: 2
+            mode: history
+            periodic: 100
+            restore_target: 0
+        learner:
+            keep_best: 0
+            keep_history: 2
+            min_interval: 900
+            mode: history
+            periodic: 1000
+            restore_target: 0
+        restore: false
+        restore_folder: null
+    folder: /surreal/results/subproc/experiment_name
+    learner:
+        max_prefetch_queue: 10
+        max_preprocess_queue: 2
+        num_gpus: 0
+        prefetch_host: localhost
+        prefetch_port: 7010
+        prefetch_processes: 2
+    loggerplex:
+        enable_local_logger: true
+        host: localhost
+        level: info
+        local_logger_level: info
+        local_logger_time_format: hms
+        overwrite: false
+        port: 7009
+        show_level: true
+        time_format: hms
+    ps:
+        parameter_serving_backend_host: localhost
+        parameter_serving_backend_port: 7006
+        parameter_serving_frontend_host: localhost
+        parameter_serving_frontend_port: 7005
+        publish_host: localhost
+        publish_port: 7007
+        shards: 2
+    replay:
+        collector_backend_host: localhost
+        collector_backend_port: 7002
+        collector_frontend_host: localhost
+        collector_frontend_port: 7001
+        evict_interval: 0.0
+        max_prefetch_queue: 1
+        max_puller_queue: 3
+        sampler_backend_host: localhost
+        sampler_backend_port: 7004
+        sampler_frontend_host: localhost
+        sampler_frontend_port: 7003
+        tensorboard_display: true
+    sender:
+        flush_iteration: 3
+        flush_time: 0
+    tensorplex:
+        agent_bin_size: 8
+        host: localhost
+        max_processes: 4
+        port: 7008
+        tensorboard_port: 6006
+        update_schedule:
+            agent: 50
+            eval_env: 5
+            eval_env_sleep: 2
+            learner: 20
+            learner_min_update_interval: 30
+            training_env: 20
